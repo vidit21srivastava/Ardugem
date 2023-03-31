@@ -1,0 +1,60 @@
+DOCUMENTATION
+
+
+1. Libraries:
+
+The code includes the following libraries:
+ • Wire.h: This is a library that allows communication with I2C devices such as the ADXL345 
+accelerometer sensor.
+ • Adafruit_GFX.h: This is a graphics library that provides a common set of graphics primitives 
+(points, lines, circles, etc.) for Adafruit display drivers.
+ • Adafruit_ST7735.h: This is a library for the ST7735 LCD display.
+ • Adafruit_ADXL345_U.h: This is a library for the ADXL345 accelerometer sensor.
+
+
+
+2.Defines:
+
+. __CS,__RST,__DC: The pin numbers used for the chip select, reset, and 
+data/command pins of the LCD display.
+.Colour definition: Colour definition is used to use the colours in code
+
+
+
+3.Variables:
+
+.charwi,charhi:The width and height of the character pixels.
+.platwi,plathi:The width and hight of the platform.
+.obswi:The width of the obstacle.
+.obspace: The space between the obstacle.
+.obscount:Counting of obstacle.
+.obspeed: Speed of the obstacle.
+.minobs:minimum number of obstacle that can arise.
+.maxobs:maximum number of obstacle that can arise.
+.charX:x co-ordinate of character.
+.charY:y co-ordinate of character.
+.charYSpeed: Speed of character in y direction.
+.platX:x co-ordinate of the platform.
+.platY:y co-ordinate of the platform.
+.platSpeed:Speed of the platform.
+.obstacleX[obscount]:x co-ordinate of the obstacle.
+.obstacleY[obscount]:y co-ordinate of the obstacle.
+
+
+
+4.Setup function
+
+. Initializes the ST7735 display using the tft.initR(INITR_BLACKTAB) and tft.setRotation(3) functions to 
+set up the display and rotate it 270 degrees.
+. Initializes the ADXL345 accelerometer sensor
+. Fills the screen using the tft.fillScreen() function.
+. printing the initial screen using tft.println() function.
+
+
+5.Loop
+.displaying the character contiously.
+.Reads the acceleration values from the ADXL345 sensor
+.move the obstacle and platform continously.
+.jump the character using accelerometer sensor.
+.checking the collison and game over.
+.counting the score.

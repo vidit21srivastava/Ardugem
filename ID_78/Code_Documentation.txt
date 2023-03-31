@@ -1,0 +1,92 @@
+Get Started with Bouncy Ball:
+
+How to Play:
+  
+  1.Download the Bounce folder into the system
+  
+  2.Now open Bounce.h in Arduino IDE
+  
+  3.Select the COM# port where Arduino is connected from the Tools dropdown and selecting port
+  
+  4.Now Verify and Upload the Progam in Arduino
+  
+  5.Now the game starts few seconds after game intro and now for moving the ball up tilt the sensor by 45 degrees, score will be collected till it avoids obstacle, the game overs if
+    it hits one and simultaneously score is displayed.
+	
+  6.The game is restart if the arduino reset button is pressed or sensor is tilted again.
+
+Documentation:
+
+The given code is for a simple game designed for Arduino, which involves avoiding obstacles while controlling the movement of a ball using 
+an accelerometer sensor. The game is displayed on a TFT display, and the player must move the ball up and down to avoid the obstacles. The code uses several libraries, 
+including math.h, TFT_ILI9163C.h, Adafruit_Sensor.h, and Adafruit_ADXL345_U.h.
+
+The first part of the code initializes various variables and constants, including the pin for the button, the update rates for the ball and the game, 
+the row and column sizes for the display, and various color constants. The TFT_ILI9163C library is used to initialize the TFT display, and the 
+Adafruit_ADXL345_U library is used to initialize the accelerometer sensor.
+
+The generateObstacles() function is used to randomly generate a new set of obstacles for the game. It generates a random number between 0 and 9, and uses this to determine
+whether a new obstacle should be added to the current set. The paintObstacles() function is used to paint the obstacles on the screen. It first clears the screen, 
+then iterates over the current set of obstacles and paints each obstacle on the screen using the display.drawBitmap() function.
+
+The isInAir() function checks whether the ball is currently in the air (i.e., has been launched). 
+It does this by checking whether the inAirStart variable is greater than 0 and whether the current time minus inAirStart is less than 6 times the game update rate.
+
+The hasLost() function checks whether the game has been lost. It does this by checking whether the user's position (stored in the USER_POSITION variable) overlaps with any of the current obstacles 
+and whether the ball is currently in the air. If both conditions are true, the function returns true.
+
+The paintBall() function is used to paint the ball on the screen. It first determines the current column position of the ball based on the USER_POSITION variable, 
+then iterates over the current ball position and paints each block of the ball on the screen using the display.drawBitmap() function. If the ball has collided with an obstacle and 
+the game has been lost, the deflated ball is displayed, otherwise, the ball is displayed normally.
+
+The gameOver() function is used to display the game over screen and wait for the player to restart the game. It first calculates the difference in acceleration since the game started 
+and displays the game over message, score, and play again message on the screen. It then enters an infinite loop and waits for the player to move the accelerometer sensor to the 
+right to restart the game.
+
+The setup() function initializes the TFT display, the serial port for debugging, and the accelerometer sensor. It also sets the data rate for the sensor to 100 Hz.
+
+Here the X1 that is obtained from the sensor is seemed to have value >3 when it is lifted up clockwise over 45 degrees.
+
+
+Flow Diagram:
+
+Initialization:
+
+Import necessary libraries
+Initialize variables
+Obstacle Generation:
+
+Generate new obstacles using random numbers
+Update current obstacles
+Obstacle Painting:
+
+Clear the screen
+Draw obstacles on the screen using bitmap images
+Update the score
+Ball Painting:
+
+Clear the previous position of the ball
+If the ball is not in contact with an obstacle, clear the space below the ball
+If the ball has lost the game, draw a deflated ball image
+Otherwise, draw a ball image
+Game Over:
+
+Check if the ball has lost the game
+If so, print the score and "GAME OVER" on the screen
+Wait for the player to move their device
+Main Loop:
+
+Read accelerometer data
+If the button is pressed, change the direction of the ball
+If enough time has passed, update the position of the ball
+If enough time has passed, update the obstacles
+Paint the ball and obstacles on the screen
+Utility Functions:
+
+isInAir() checks if the ball is in the air
+hasLost() checks if the ball has hit an obstacle and has not bounced back up yet
+generateObstacles() generates new obstacles using random numbers
+Note that this flow diagram is not exhaustive and some details may have been left out.
+
+
+

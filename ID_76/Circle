@@ -1,0 +1,97 @@
+
+// include TFT and SPI libraries
+#include <TFT.h>  
+#include <SPI.h>
+
+// pin definition for Arduino UNO
+#define cs   10
+#define dc   9
+#define rst  8
+#define count
+
+
+// create an instance of the library
+TFT TFTscreen = TFT(cs, dc, rst);
+
+#include <Wire.h>
+
+int ADXL345 = 0x53;
+int X_out, Y_out, Z_out;
+
+void setup() {
+
+  //initialize the library
+  TFTscreen.begin();
+
+  // clear the screen with a black background
+  TFTscreen.background(0, 0, 0);
+  //set the text size
+  TFTscreen.setTextSize(1.8);
+  
+  Serial.begin(9600);
+  Wire.begin();
+
+  Wire.beginTransmission(ADXL345);
+  Wire.write(0x2D); //talk to POWER_CTL Register - 0x2D
+  
+  Wire.write(8); // Bit D3 High for measuring enable (8dec -> 0000 1000 binary)
+  Wire.endTransmission();
+  delay(10);
+}
+
+void loop() {
+  Wire.beginTransmission(ADXL345);
+  Wire.write(0x32);
+  Wire.endTransmission(false);
+  Wire.requestFrom(ADXL345, 6, true);
+
+  X_out = ( Wire.read() | Wire.read() << 8);
+  Y_out = ( Wire.read() | Wire.read() << 8);
+  Z_out = ( Wire.read() | Wire.read() << 8);
+
+  //Serial.print(X_out);
+  //Serial.print(" ");
+  Serial.print(Y_out);
+  Serial.print(" ");
+  //Serial.println(Z_out);
+  //delay(100);
+
+  //generate a random color
+  int redRandom = random(0, 255);
+  int greenRandom = random (0, 255);
+  int blueRandom = random (0, 255);
+  
+  // set a random font color
+  TFTscreen.stroke(redRandom, greenRandom, blueRandom);
+  
+  // print Hello, World! in the middle of the screen
+  //TFTscreen.text("Pratik & Burman", 0, 57);
+
+  /*TFTscreen.text("                 ", 0,50);
+  TFTscreen.text("         ÜÛßÛÛÛÛÜ", 0,51);
+  TFTscreen.text("         ÛÛÛÛÛÛÛÛ", 0,52);
+  TFTscreen.text("         ÛÛÛÛÛßßß", 0,53);
+  TFTscreen.text(" Û      ÜÛÛÛÛßßß ", 0,56);
+  TFTscreen.text(" ÛÛÜ  ÜÛÛÛÛÛÛÜÜÜ ", 0,57);
+  TFTscreen.text(" ßÛÛÛÛÛÛÛÛÛÛÛ  ß ", 0,58);
+  TFTscreen.text("   ßÛÛÛÛÛÛÛß     ", 0,59);*/
+
+  //if(Y_out>60){
+  TFTscreen.circle(Y_out/2,X_out/2,10);//(x,y,r)
+  delay(0.011);
+  //}
+
+  //count=count+1
+  
+
+  /*else{
+  TFTscreen.circle(50,64,10);
+  delay(500);}*/
+
+  //erase all figures
+  TFTscreen.background(0,0,0);
+  
+  // wait 200 miliseconds until change to next color
+  delay(0.011);
+}
+
