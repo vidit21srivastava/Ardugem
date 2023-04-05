@@ -1,4 +1,4 @@
-# -IITBBS_GC_RS_345
+# ID_101
 
 The data is fetched from https://www.coinapi.io/
 
